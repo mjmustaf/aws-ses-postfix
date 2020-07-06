@@ -1,11 +1,11 @@
 version: '2'
 services:
   postfix:
-    image: 723712175675.dkr.ecr.us-gov-west-1.amazonaws.com/build-dev/c5308326/postfix:latest
+    image: <your ECR/docker hub image>
     expose:
     - "25"
     env_file:
       - .env
     restart: always
     volumes:
-     - "/etc/localtime:/etc/localtime:ro"
+     - "/var/log:/var/log"

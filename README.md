@@ -1,15 +1,15 @@
 A simple postfix container built around aws ses.
 
 # TL-DR
- 1. ses-terraform -> create a ses resource with terraform
- 2. ses-docker -> create docker image and run the image locally
+ 1. ses-terraform -> create a aws ses resource with terraform
+ 2. ses-docker -> create docker image,push to ecr and run the image locally
  3. ses-ansible( optional ) -> use ansible roles and a docker deploy playbook and a dcoker compose to launch a postfix container from ECR to your target host
 
 
 # Available docker environment variables:
 - AWS_SES_USERNAME (required): Username of the identity account
 - AWS_SES_PASSWORD (required): Password of the identify account
-- AWS_SES_HOST(required): SMTP server name
+- AWS_SES_HOST(required): SMTP server name (587 default)
 - POSTFIX_HOST(required): Use 'localhost' if running locally
 
 # Dockerhub image

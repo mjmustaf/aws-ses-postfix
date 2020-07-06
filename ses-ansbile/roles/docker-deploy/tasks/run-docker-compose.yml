@@ -1,6 +1,4 @@
 ---
-
-
 - name: Pull the specified Docker image
   docker_image:
     state: present

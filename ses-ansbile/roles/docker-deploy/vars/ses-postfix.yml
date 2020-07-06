@@ -52,8 +52,8 @@ container_restart_policy: 'always'
 postfix_host: 'localhost'
 
 
-aws_ses_host: 'email-smtp.us-west-2.amazonaws.com'
+aws_ses_host: ''
 
-aws_ses_username: 'AKIA6AHBXPC4XQVKX6XW'
+aws_ses_username: ''
 
-aws_ses_password: 'BKykWF0Jd1ONGn27OOZnvaSSD5EVcmVHCIhCziT+9UpQ'
+aws_ses_password: ''
