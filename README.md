@@ -18,7 +18,7 @@ mjmustaf/aws-ses-postfix:latest
 
 # Test 
 
-- docker exec to the container  ' docker exec -it <name your container> /bin/bash ' and the commands 
+- docker exec to the container  ``` docker exec -it <name your container> /bin/bash ``` and the commands 
 below line by line
 ```
 sendmail -f <senderemaail> <Reciveremail>
