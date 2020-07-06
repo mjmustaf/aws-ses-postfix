@@ -23,7 +23,7 @@ provider "aws" {
 # Amazon SES identity domain
 variable "email" {
   description = "email  that SES will send outbound mail from"
-  default ="junaid.mustafa@gmail.com"
+  default ="<email-address>"
 }
 
 variable "ses_recipient_filter" {
