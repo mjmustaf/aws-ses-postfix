@@ -1,0 +1,66 @@
+---
+# Example:
+#   Installs and configures GitLab with the domain name of 'example.domain.com':
+#    
+- hosts: all
+  gather_facts: yes
+  become: yes
+  vars:
+    remove_postfix: false
+    sender_domain: "{{ ansible_domain }}"
+
+  handlers:
+    - name: restart postfix
+      service: name=postfix state=restarted
+
+  tasks:
+  - name: Check if Postfix installed
+    package_facts:
+      manager: auto
+
+  - name: Install, configure, and start Postfix
+    block:
+    - name: Ensure Postfix is installed
+      package:
+        name: postfix
+        state: present
+      when: "'postfix' not in ansible_facts.packages"
+
+    - name: Configure Postfix for relaying email
+      lineinfile:
+        path: /etc/postfix/main.cf
+        group: root
+        owner: root
+        firstmatch: yes
+        insertbefore: "{{ item.insertbefore }}"
+        regexp: "{{ item.regexp }}"
+        line: "{{ item.line }}"
+        backrefs: true
+      loop:
+        - { insertbefore: '^myhostname = {{ ansible_hostname }}(.*)', regexp: '^#myhostname = host.domain.tld', line: 'myhostname = {{ ansible_fqdn }}' }
+        - { insertbefore: '^#mydomain = domain.tld$', regexp: 'mydomain = (.*)', line: 'mydomain = {{ ansible_domain }}' }
+        - { insertbefore: '^#myorigin = \$mydomain', regexp: '^myorigin = (.*)', line: 'myorigin = {{ sender_domain }}' }
+      notify:
+          - restart postfix
+
+    - name: Ensure Postfix is started and enabled
+      service:
+        name: postfix
+        state: started
+        enabled: true
+    when: not remove_postfix
+
+  - name: Remove Postfix configuration
+    block:
+    - name: Remove Postfix configuration folder
+      file:
+        path: /etc/postfix
+        state: absent
+
+    - name: Uninstall Postfix
+      package:
+        name: postfix
+        state: absent
+      when:  "'postfix' in ansible_facts.packages"
+    when: remove_postfix | bool
+...

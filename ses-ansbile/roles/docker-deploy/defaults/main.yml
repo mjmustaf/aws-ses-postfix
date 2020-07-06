@@ -1,0 +1,69 @@
+---
+# Defaults file for the 'docker-deploy' role.
+
+##################################
+# Ansible role related variables #
+##################################
+
+# The AWS region that the AWS ECR registry resides in.
+aws_region: 'us-west-2'
+
+# Whether to use the AWS ECR registry.
+aws_ecr_registry: false
+
+# The name of the variables file found in the role's '/vars' directory to include when the role is called.
+docker_variables_filename: ''
+
+# Whether to create a Docker container using either of the two methods: Docker CLI or Docker Compose.
+docker_create_container: false
+
+# Whether to use Docker Compose to create the container.
+docker_compose: false
+
+# The name of the Docker Compose template file to use if the 'docker_compose' is set to true.
+docker_compose_template_filename: ''
+
+# Whether to have the role become 'root', a different user, or the default user when running the Docker commands on the target host.
+docker_container_become: false
+
+
+
+###############################
+# Container related variables #
+###############################
+
+# The name of the Docker registry to log into.
+docker_registry_name: ''
+
+# The username to use when authenticating with the Docker registry specified in the 'docker_registry_name' variable.
+docker_registry_username: ''
+
+# The password to use when authenticating with the Docker registry specified in the 'docker_registry_name' variable.
+# NOTE: This variable's value should be provided to the role in a secure manner such as a 'vars_prompt' or use of
+#       the 'vault-auth' role. The password should NOT be saved in this file.
+docker_registry_password: ''
+
+# The 'registry/name' of the Docker image to pull for the containers. For example: 'gitlab/gitlab-ee:latest'
+docker_image: ''
+
+# The name to use for the container once it is created.
+container_name: ''
+
+# The container restart policy. Valid options are 'no' (The default if nothing is specified), 'always', 'on-failure', and 'unless-stopped'.
+container_restart_policy: ''
+
+# The hostname to set for the container.
+container_hostname: ''
+
+# A dictionary of dictionaries defining environment variables to pass to the containers.
+container_environment_variables: ''
+  # EXAMPLE1: 'value 1'
+  # EXAMPLE2: 'value 2'
+
+# A list of ports to publish to the host for the container.
+container_ports: ''
+
+# A list of volumes defined for the container.
+container_volumes: ''
+
+...

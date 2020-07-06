@@ -1,0 +1,29 @@
+---
+- name: Get the AWS ECR password
+  shell: "/usr/local/bin/aws ecr get-login-password --region {{ aws_region }}"
+  when:
+    - aws_ecr_registry | bool
+    - docker_registry_password | length == 0
+  register: aws_ecr_login_results
+  environment:
+    AWS_ACCESS_KEY_ID: "{{ aws_access_key | default(lookup('env', 'AWS_ACCESS_KEY_ID'), true) }}"
+    AWS_SECRET_ACCESS_KEY: "{{ aws_secret_key | default(lookup('env', 'AWS_SECRET_ACCESS_KEY'), true) }}"
+  no_log: false
+  become: "{{ docker_container_become | default(false, true) }}"
+
+- name: Save the AWS ECR password as a fact
+  set_fact:
+    aws_ecr_registry_password: "{{ aws_ecr_login_results.stdout }}"
+  when: aws_ecr_login_results.changed | bool
+  no_log: true
+
+- name: Log into the specified Docker registry
+  docker_login:
+    state: present
+    registry: "{{ docker_registry_name }}"
+    username: "{{ docker_registry_username }}"
+    password: "{{ docker_registry_password | default(aws_ecr_registry_password, true) }}"
+    reauthorize: true
+  become: "{{ docker_container_become | default(false, true) }}"
+
+...

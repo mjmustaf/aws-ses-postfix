@@ -1,0 +1,42 @@
+---
+
+- name: Load the variables from the variables file specified in the 'docker_variables_filename' variable
+  include_vars:
+    file: "{{ docker_variables_filename }}"
+  when:
+    - docker_variables_filename is defined
+    - docker_variables_filename | length > 0
+
+- name: Ensure that Docker and Docker Compose are installed on the target hosts
+  package:
+    state: present
+    name:
+      - 'docker-ce'
+      - 'docker-ce-cli'
+      - 'containerd.io'
+      - 'python-docker-py'
+  become: true
+
+- name: Log into the specified Docker registry.
+  include_tasks:
+    file: login-registry.yml
+  when:
+    - docker_create_container | bool
+    - docker_registry_name is defined
+    - docker_registry_name | length > 0
+
+- name: Create the containers using Docker CLI
+  include_tasks:
+    file: run-docker-cli.yml
+  when:
+    - docker_create_container | bool
+    - docker_compose | bool == false
+
+- name: Create the containers using Docker Compose
+  include_tasks:
+    file: run-docker-compose.yml
+  when:
+    - docker_create_container | bool
+    - docker_compose | bool
+
+...

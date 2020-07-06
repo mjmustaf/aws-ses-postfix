@@ -1,0 +1,11 @@
+version: '2'
+services:
+  postfix:
+    image: 962546071737.dkr.ecr.us-west-2.amazonaws.com/junaid/postfix-example:latest
+    expose:
+    - "25"
+    env_file:
+      - .env
+    restart: always
+    volumes:
+     - "/var/log:/var/log"

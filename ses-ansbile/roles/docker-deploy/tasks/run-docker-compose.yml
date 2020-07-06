@@ -1,0 +1,39 @@
+---
+
+
+- name: Pull the specified Docker image
+  docker_image:
+    state: present
+    source: pull
+    name: "{{ docker_image }}"
+  become: "{{ docker_container_become | default(false, true) }}"
+
+- name: Copy the template 'docker-compose.yml' file to the target hosts
+  template:
+    src: "{{ docker_compose_template_filename }}"
+    dest: '/tmp/docker-compose.yml'
+    trim_blocks: false
+    mode: '0600'
+
+
+- name: Create and start the containers via Docker Compose
+  shell:
+    cmd: "/usr/local/bin/docker-compose up -d"
+    chdir: '/tmp'
+  register: docker_compose_container_results
+  become: "{{ docker_container_become | default(false, true) }}"
+  retries: 1
+  delay: 15
+  until: docker_compose_container_results.rc == 0
+
+
+- name: Output of Docker Compose when creating the containers
+  debug:
+    var: docker_compose_container_results
+
+- name: Remove the template 'docker-compose.yml' file from the target hosts
+  file:
+    state: absent
+    path: '/tmp/docker-compose.yml'
+
+...

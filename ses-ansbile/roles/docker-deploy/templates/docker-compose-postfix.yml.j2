@@ -1,0 +1,15 @@
+version: '2'
+services:
+  postfix:
+    image: {{docker_image}}
+    container_name: '{{ container_name }}'
+    expose:
+    - "25"
+    environment:
+      AWS_SES_HOST: '{{ aws_ses_host }}'
+      AWS_SES_USERNAME: '{{ aws_ses_username }}'
+      AWS_SES_PASSWORD: '{{ aws_ses_password }}'
+      POSTFIX_HOST: '{{ postfix_host }}'
+    restart: always
+    volumes:
+    - "/var/log:/var/log"

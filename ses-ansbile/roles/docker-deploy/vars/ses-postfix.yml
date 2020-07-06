@@ -1,0 +1,59 @@
+--
+##################################
+# Ansible role related variables #
+##################################
+
+
+aws_region: 'us-west-2'
+
+# Whether to use the AWS ECR registry.
+aws_ecr_registry: true
+
+# Whether to create a Docker container using either of the two methods: Docker CLI or Docker Compose.
+docker_create_container: true
+
+# Whether to use Docker Compose to create the container.
+docker_compose: true
+
+# The name of the Docker Compose template file to use if the 'docker_compose' is set to true.
+docker_compose_template_filename: 'docker-compose-postfix.yml.j2'
+
+# Whether to have the role become 'root', a different user, or the default user when running the Docker commands on the target host.
+docker_container_become: true
+
+
+###############################
+# Container related variables #
+###############################
+
+docker_registry_name: '962546071737.dkr.ecr.us-west-2.amazonaws.com/junaid/postfix-example'
+
+
+docker_registry_username: 'AWS'
+
+docker_registry_password: ''
+
+
+docker_image: '{{ docker_registry_name }}/postfix:latest'
+
+container_name: 'postfix'
+
+container_hostname: 'postfix.test'
+
+
+container_restart_policy: 'always'
+
+
+
+############################
+# PostFix related variables #
+############################
+
+postfix_host: 'localhost'
+
+
+aws_ses_host: 'email-smtp.us-west-2.amazonaws.com'
+
+aws_ses_username: 'AKIA6AHBXPC4XQVKX6XW'
+
+aws_ses_password: 'BKykWF0Jd1ONGn27OOZnvaSSD5EVcmVHCIhCziT+9UpQ'
