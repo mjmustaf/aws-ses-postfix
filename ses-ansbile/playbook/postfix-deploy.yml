@@ -1,7 +1,5 @@
 ---
-# Example:
-#   Installs and configures GitLab with the domain name of 'example.domain.com':
-#    
+
 - hosts: all
   gather_facts: yes
   become: yes

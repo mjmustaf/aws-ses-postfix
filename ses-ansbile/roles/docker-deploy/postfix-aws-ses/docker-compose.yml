@@ -1,7 +1,7 @@
 version: '2'
 services:
   postfix:
-    image: 962546071737.dkr.ecr.us-west-2.amazonaws.com/junaid/postfix-example:latest
+    image: <your ECT Repo>
     expose:
     - "25"
     env_file:
