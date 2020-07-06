@@ -33,7 +33,7 @@ mjmustaf/aws-ses-postfix:latest
 - Docker exec to the container  ``` docker exec -it <name your container> /bin/bash ``` and the commands 
 below line by line
 ```
-sendmail -f <senderemaail> <Receiveremail>
+sendmail -f <senderemail> <Receiveremail>
 From:  <Sender Email>
 Subject: Amazon SES postfix container Test                
 This message was sent using Amazon SES from a postfix container.            
