@@ -1,6 +1,4 @@
 #!/bin/sh
-# Synopsis: This script is copied into the postfix Docker image upon creation by the dockerfile.
-#           This script is later ran when a container is started from the Docker image.
 
 cp /etc/resolv.conf /var/spool/postfix/etc/resolv.conf
 postconf -e "relayhost = $AWS_SES_HOST:$AWS_SES_PORT" \

@@ -4,16 +4,13 @@ A simple postfix container built around aws ses.
 - AWS_SES_USERNAME (required): Username of the identity account
 - AWS_SES_PASSWORD (required): Password of the identify account
 - AWS_SES_HOST(required): SMTP server name
-- POSTFIX_HOST(optional): Use localhost if running locally
+- POSTFIX_HOST(required): Use 'localhost' if running locally
 
 # usage
 
-docker run -d --rm --name postfix-aws \
--e AWS_SES_HOST= \
--e AWS_SES_USERNAME= \
--e AWS_SES_PASSWORD=\
+docker run -d --rm --name <name your conatiner> \
+-e AWS_SES_HOST=<your smtp host name> \
+-e AWS_SES_USERNAME=<your SES username>\
+-e AWS_SES_PASSWORD=<your SES password>\
 -e POSTFIX_HOST=localhost \
-<your docker image name>
-
-
-
+mjmustaf/aws-ses-postfix:latest
