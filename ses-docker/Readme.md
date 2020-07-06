@@ -5,9 +5,12 @@ Steps:
 
 If you would to directly use this image from dockerhub:
 
-docker run -d --rm --name postfix-aws \
+# Usage
+```
+docker run -d --rm --name <name your conatiner> \
 -e AWS_SES_HOST=<your smtp host name> \
 -e AWS_SES_USERNAME=<your SES username>\
 -e AWS_SES_PASSWORD=<your SES password>\
 -e POSTFIX_HOST=localhost \
 mjmustaf/aws-ses-postfix:latest
+```
